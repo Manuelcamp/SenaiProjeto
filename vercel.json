@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/static/index.html" },
+    { "source": "/telao", "destination": "/static/telao.html" },
+    { "source": "/c", "destination": "/static/celular.html" }
+  ],
+  "functions": {
+    "app.py": { "includeFiles": "perfis.json" }
+  }
+}

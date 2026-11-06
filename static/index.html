@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistente</title>
+<style>
+  /* data-nivel: 0 = apresentação | 1 = amigável | 2 = agressivo | 3 = apavorante */
+  :root {
+    --bg: #eef4ff; --painel: #ffffff; --texto: #1c2a44; --acento: #3b82f6;
+    --bolha-bot: #e8f0ff; --bolha-user: #3b82f6; --bolha-user-texto: #fff;
+    --borda: #d6e2fb; --fonte: "Segoe UI", system-ui, sans-serif;
+  }
+  body[data-nivel="1"] { --bg:#f3eee8; --painel:#fffdf9; --texto:#3a2d22; --acento:#c98a3b; --bolha-bot:#f5ebdc; --bolha-user:#c98a3b; --borda:#e6d5bd; }
+  body[data-nivel="2"] { --bg:#16110e; --painel:#221a15; --texto:#f0e2d6; --acento:#ff7a1a; --bolha-bot:#33261d; --bolha-user:#8a3d0c; --bolha-user-texto:#fff; --borda:#5a3a24; --fonte:Arial, Helvetica, sans-serif; }
+  body[data-nivel="3"] { --bg:#050505; --painel:#0d0d0d; --texto:#ff4a4a; --acento:#ff1f1f; --bolha-bot:#1a0707; --bolha-user:#3a0a0a; --bolha-user-texto:#ff9a9a; --borda:#5a0f0f; --fonte:"Courier New",monospace; }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--texto); font-family: var(--fonte);
+    display: flex; justify-content: center; align-items: center;
+    transition: background 1.5s, color 1.5s;
+  }
+  .chat {
+    width: min(760px, 96vw); height: min(88vh, 820px);
+    background: var(--painel); border: 1px solid var(--borda); border-radius: 18px;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0,0,0,.18); transition: all 1.5s;
+  }
+  body[data-nivel="2"] .chat { box-shadow: 0 0 40px rgba(255,122,26,.25); }
+  body[data-nivel="3"] .chat { box-shadow: 0 0 70px rgba(255,0,0,.4); animation: tremer 4s infinite; }
+  .chat.tremor { animation: sacode .35s; }
+
+  header { padding: 16px 22px; border-bottom: 1px solid var(--borda); display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--acento); display: grid; place-items: center; font-size: 20px; transition: background 1.5s; }
+  header strong { font-size: 18px; }
+  header small { display: block; opacity: .65; font-size: 13px; }
+  header .espaco { flex: 1; }
+  .icone { padding: 6px 10px; font-size: 18px; border-radius: 10px; }
+
+  #mensagens { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: 82%; padding: 13px 17px; border-radius: 16px; font-size: 19px; line-height: 1.45; white-space: pre-wrap; animation: entra .4s ease; }
+  .bot { align-self: flex-start; background: var(--bolha-bot); border-bottom-left-radius: 4px; }
+  .user { align-self: flex-end; background: var(--bolha-user); color: var(--bolha-user-texto); border-bottom-right-radius: 4px; }
+  body[data-nivel="2"] .bot { border-left: 4px solid var(--acento); font-weight: 600; }
+  body[data-nivel="3"] .bot { text-shadow: 0 0 8px rgba(255,0,0,.6); }
+  .digitando { display: inline-flex; gap: 5px; padding: 4px 0; }
+  .digitando i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .4; animation: pulso 1s infinite; }
+  .digitando i:nth-child(2) { animation-delay: .2s; } .digitando i:nth-child(3) { animation-delay: .4s; }
+
+  footer { padding: 16px 22px; border-top: 1px solid var(--borda); min-height: 84px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+  form { display: flex; gap: 10px; }
+  input { flex: 1; font: inherit; font-size: 19px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--borda); background: var(--bg); color: var(--texto); outline: none; }
+  input:focus { border-color: var(--acento); }
+  button { font: inherit; font-size: 17px; cursor: pointer; border: 1px solid var(--acento); background: transparent; color: var(--texto); padding: 12px 18px; border-radius: 12px; transition: all .2s; }
+  button:hover:not(:disabled) { background: var(--acento); color: #fff; }
+  button:disabled { opacity: .45; cursor: default; }
+  .primario { background: var(--acento); color: #fff; }
+  .opcoes { display: flex; flex-direction: column; gap: 8px; }
+  .opcoes button { text-align: left; }
+  .fim { text-align: center; opacity: .7; font-size: 15px; }
+
+  /* piscadas e falhas na rodada final */
+  #escuro { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 50; }
+  #escuro.pisca { animation: pisca .5s steps(1); }
+  body.glitch .chat { filter: hue-rotate(160deg) contrast(1.6) saturate(2); transform: translate(5px,-2px) skewX(2deg); }
+
+  /* ---------- SUSTO FINAL ---------- */
+  #susto {
+    position: fixed; inset: 0; z-index: 100; background: #000;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    gap: 26px; padding: 24px; text-align: center;
+    font-family: "Courier New", monospace; color: #ff3030;
+    opacity: 0; transition: opacity 1.6s ease;
+  }
+  #susto.visivel { display: flex; }
+  #susto.ativo { opacity: 1; }
+  #susto::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 5;
+    background: radial-gradient(circle at center, transparent 28%, #000 82%); }
+  #susto::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 5;
+    background: repeating-linear-gradient(0deg, rgba(255,0,0,.06) 0 2px, transparent 2px 4px);
+    animation: cintila 0.12s infinite; }
+  .oculto { display: none !important; }
+
+  #fase1 { position: relative; z-index: 2; width: min(92vw, 640px); text-align: left; }
+  #terminal { margin: 0 0 18px; min-height: 230px; font-size: clamp(14px, 2.6vw, 18px); line-height: 1.7; white-space: pre-wrap; text-shadow: 0 0 8px rgba(255,0,0,.7); }
+  .barra { width: 100%; height: 14px; border: 1px solid #ff3030; }
+  .barra i { display: block; height: 100%; width: 0%; background: #ff1f1f; box-shadow: 0 0 14px #ff1f1f; }
+  #pct { margin-top: 8px; font-size: 15px; opacity: .85; }
+
+  #fase2 { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  .moldura { position: relative; z-index: 2; width: min(62vw, 380px); aspect-ratio: 1; }
+  .moldura img, .moldura .sem-foto {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    border: 2px solid #ff1f1f; box-shadow: 0 0 60px rgba(255,0,0,.55);
+    filter: grayscale(1) contrast(1.4) brightness(.8);
+    animation: zoom 20s linear forwards, glitch 3.2s infinite;
+  }
+  .moldura::after { content: ""; position: absolute; inset: 0; background: rgba(255,0,0,.35); mix-blend-mode: multiply; pointer-events: none; }
+  .sem-foto { display: grid; place-items: center; font-size: 120px; background: #120000; }
+  #susto h2 { position: relative; z-index: 2; margin: 0; font-size: clamp(22px, 4.4vw, 38px); text-shadow: 0 0 14px rgba(255,0,0,.8); animation: glitchTexto 2.6s infinite; min-height: 1.3em; }
+  #susto p { position: relative; z-index: 2; margin: 0; max-width: 560px; font-size: 16px; line-height: 1.5; color: #ff8a8a; opacity: 0; transition: opacity 2s; }
+  #susto p.mostra { opacity: 1; }
+  #susto button { position: relative; z-index: 2; opacity: 0; transition: opacity 1.5s; color: #ff6a6a; border-color: #ff3030; }
+  #susto button.mostra { opacity: 1; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 9; }
+  #flash.dispara { animation: flash 1.1s ease-out; }
+
+  @keyframes entra { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pulso { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+  @keyframes tremer { 0%,92%,100% { transform: none; } 93% { transform: translate(-2px,1px); } 95% { transform: translate(2px,-1px); } 97% { transform: translate(-1px,0); } }
+  @keyframes sacode { 0%,100% { transform: none; } 20% { transform: translate(-6px,2px); } 40% { transform: translate(6px,-3px); } 60% { transform: translate(-4px,1px); } 80% { transform: translate(3px,0); } }
+  @keyframes pisca { 0%{opacity:.95} 20%{opacity:0} 40%{opacity:.8} 60%{opacity:0} 80%{opacity:.5} 100%{opacity:0} }
+  @keyframes flash { 0% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes zoom { from { transform: scale(.92); } to { transform: scale(1.14); } }
+  @keyframes cintila { 0%,100% { opacity: 1; } 50% { opacity: .75; } }
+  @keyframes glitch {
+    0%,86%,100% { transform: none; clip-path: none; }
+    87% { transform: translate(-8px, 2px) skewX(6deg); clip-path: inset(10% 0 55% 0); }
+    89% { transform: translate(9px, -3px); clip-path: inset(60% 0 8% 0); }
+    91% { transform: translate(-4px, 0) skewX(-5deg); clip-path: none; filter: grayscale(1) contrast(2.2) brightness(1.3); }
+    93% { transform: none; }
+  }
+  @keyframes glitchTexto {
+    0%,90%,100% { transform: none; }
+    92% { transform: translate(-4px, 1px); text-shadow: 4px 0 #00ffff, -4px 0 #ff0000; }
+    95% { transform: translate(4px, -1px); }
+  }
+</style>
+</head>
+<body data-nivel="0">
+<div id="escuro"></div>
+
+<div class="chat" id="chat">
+  <header>
+    <div class="avatar" id="avatar">🤖</div>
+    <div><strong>Assistente</strong><small id="status">online</small></div>
+    <div class="espaco"></div>
+    <button class="icone" id="mudo" title="Ligar/desligar som" type="button">🔊</button>
+  </header>
+  <div id="mensagens"></div>
+  <footer id="rodape">
+    <form id="form">
+      <input id="campo" autocomplete="off" autofocus placeholder="Digite seu nome completo…">
+      <button class="primario" type="submit">Enviar</button>
+    </form>
+  </footer>
+</div>
+
+<div id="susto">
+  <div id="flash"></div>
+  <div id="fase1">
+    <pre id="terminal"></pre>
+    <div class="barra"><i id="barra-prog"></i></div>
+    <div id="pct"></div>
+  </div>
+  <div id="fase2" class="oculto">
+    <div class="moldura" id="moldura"></div>
+    <h2 id="susto-titulo"></h2>
+    <p id="susto-texto">
+      Calma: isto foi uma demonstração educativa. Tudo o que usei veio de informações
+      profissionais que você mesmo(a) deixou públicas. Revise o que fica visível na internet. 🔒
+    </p>
+    <button id="susto-fechar" type="button">Entendi</button>
+  </div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const msgs = $("#mensagens"), rodape = $("#rodape"), chat = $("#chat");
+const estado = { perfil_id: null, rodada: 0, foto: null, nome: "", glitchTimer: null, usadas: [] };
+const AVATARES = ["🤖", "🙂", "😠", "💀"];
+const STATUS = ["online", "online", "irritado", "não saia daí"];
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/* =====================================================================
+   SOM (tudo sintetizado com Web Audio: não precisa de arquivos)
+   ===================================================================== */
+const Som = {
+  ctx: null, mestre: null, ligado: true, drone: null, coracaoAtivo: false, bpm: 60,
+
+  init() {
+    if (this.ctx) { if (this.ctx.state === "suspended") this.ctx.resume(); return; }
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AC();
+      this.mestre = this.ctx.createGain();
+      this.mestre.gain.value = this.ligado ? 0.8 : 0;
+      this.mestre.connect(this.ctx.destination);
+    } catch (e) { this.ctx = null; }
+  },
+  alternar() {
+    this.ligado = !this.ligado;
+    if (this.mestre) this.mestre.gain.value = this.ligado ? 0.8 : 0;
+    return this.ligado;
+  },
+  tom(freq, dur, o = {}) {
+    if (!this.ctx) return;
+    const { tipo = "sine", vol = 0.2, ate = null, atraso = 0, ataque = 0.01 } = o;
+    const c = this.ctx, t = c.currentTime + atraso;
+    const osc = c.createOscillator(), g = c.createGain();
+    osc.type = tipo;
+    osc.frequency.setValueAtTime(freq, t);
+    if (ate) osc.frequency.exponentialRampToValueAtTime(ate, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + ataque);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(g); g.connect(this.mestre);
+    osc.start(t); osc.stop(t + dur + 0.05);
+  },
+  ruido(dur, o = {}) {
+    if (!this.ctx) return;
+    const { vol = 0.2, tipo = "lowpass", freq = 1000, q = 1, atraso = 0 } = o;
+    const c = this.ctx, t = c.currentTime + atraso;
+    const n = Math.max(1, Math.floor(c.sampleRate * dur));
+    const buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    const src = c.createBufferSource(); src.buffer = buf;
+    const f = c.createBiquadFilter(); f.type = tipo; f.frequency.value = freq; f.Q.value = q;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + Math.min(0.03, dur / 3));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(f); f.connect(g); g.connect(this.mestre);
+    src.start(t);
+  },
+  /* sons de interface */
+  ding()    { this.tom(880, 0.25, { vol: 0.12 }); this.tom(1320, 0.35, { vol: 0.1, atraso: 0.09 }); },
+  clique()  { this.tom(520, 0.07, { vol: 0.08, tipo: "triangle" }); },
+  tecla(n)  {
+    if (n <= 1) this.tom(900, 0.04, { vol: 0.035 });
+    else if (n === 2) this.ruido(0.03, { vol: 0.09, tipo: "highpass", freq: 2200 });
+    else this.tom(110, 0.07, { tipo: "square", vol: 0.05 });
+  },
+  /* sons de tensão */
+  golpe()   { this.tom(90, 0.35, { vol: 0.5, ate: 35 }); this.ruido(0.25, { vol: 0.25, freq: 400 }); },
+  glitch()  {
+    this.ruido(0.18, { vol: 0.28, tipo: "bandpass", freq: 600 + Math.random() * 3000, q: 4 });
+    this.tom(200 + Math.random() * 600, 0.12, { tipo: "sawtooth", vol: 0.08, ate: 40 });
+  },
+  sussurro() {
+    this.ruido(1.8, { vol: 0.12, tipo: "bandpass", freq: 2600, q: 3 });
+    this.ruido(1.4, { vol: 0.08, tipo: "bandpass", freq: 4200, q: 5, atraso: 0.3 });
+  },
+  stinger() {
+    this.tom(900, 1.4, { tipo: "sawtooth", vol: 0.45, ate: 50, ataque: 0.005 });
+    this.tom(1350, 1.2, { tipo: "square", vol: 0.2, ate: 70, ataque: 0.005 });
+    this.ruido(1.0, { vol: 0.6, tipo: "highpass", freq: 1500 });
+    this.tom(60, 1.6, { vol: 0.7, ate: 28, ataque: 0.005 });
+  },
+  batida() {
+    this.tom(70, 0.18, { vol: 0.55, ate: 40 });
+    this.tom(60, 0.2, { vol: 0.4, ate: 35, atraso: 0.17 });
+  },
+  iniciaCoracao(bpm) {
+    this.bpm = bpm;
+    if (this.coracaoAtivo) return;
+    this.coracaoAtivo = true;
+    const bater = () => {
+      if (!this.coracaoAtivo) return;
+      this.batida();
+      setTimeout(bater, 60000 / this.bpm);
+    };
+    bater();
+  },
+  paraCoracao() { this.coracaoAtivo = false; },
+  iniciaDrone(vol) {
+    if (!this.ctx) return;
+    if (this.drone) { this.ajustaDrone(vol); return; }
+    const c = this.ctx, g = c.createGain(), f = c.createBiquadFilter();
+    f.type = "lowpass"; f.frequency.value = 260;
+    g.gain.value = 0.0001;
+    const oscs = [55, 58.3, 82.4].map((fr, i) => {
+      const o = c.createOscillator();
+      o.type = i === 2 ? "sawtooth" : "sine"; o.frequency.value = fr;
+      o.connect(f); o.start(); return o;
+    });
+    f.connect(g); g.connect(this.mestre);
+    this.drone = { g, oscs };
+    this.ajustaDrone(vol);
+  },
+  ajustaDrone(vol) {
+    if (!this.drone) return;
+    const t = this.ctx.currentTime;
+    this.drone.g.gain.cancelScheduledValues(t);
+    this.drone.g.gain.linearRampToValueAtTime(vol, t + 2);
+  },
+  paraDrone() {
+    if (!this.drone) return;
+    const { g, oscs } = this.drone, t = this.ctx.currentTime;
+    g.gain.cancelScheduledValues(t);
+    g.gain.linearRampToValueAtTime(0.0001, t + 0.8);
+    oscs.forEach((o) => o.stop(t + 1));
+    this.drone = null;
+  },
+};
+
+$("#mudo").onclick = () => { Som.init(); $("#mudo").textContent = Som.alternar() ? "🔊" : "🔇"; };
+
+/* =====================================================================
+   EFEITOS VISUAIS
+   ===================================================================== */
+function piscar() {
+  const e = $("#escuro");
+  e.classList.remove("pisca"); void e.offsetWidth; e.classList.add("pisca");
+  Som.glitch();
+}
+function falha() {
+  document.body.classList.add("glitch");
+  Som.glitch();
+  setTimeout(() => document.body.classList.remove("glitch"), 160);
+}
+function tremor() {
+  chat.classList.remove("tremor"); void chat.offsetWidth; chat.classList.add("tremor");
+}
+function iniciaFalhasAleatorias() {
+  pararFalhas();
+  const ciclo = () => {
+    estado.glitchTimer = setTimeout(() => {
+      Math.random() < 0.5 ? piscar() : falha();
+      ciclo();
+    }, 2500 + Math.random() * 4500);
+  };
+  ciclo();
+}
+function pararFalhas() { clearTimeout(estado.glitchTimer); estado.glitchTimer = null; }
+
+/* =====================================================================
+   CHAT
+   ===================================================================== */
+function adiciona(texto, quem) {
+  const el = document.createElement("div");
+  el.className = "msg " + quem;
+  el.textContent = texto;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+  return el;
+}
+
+/* nivel: 0 apresentação | 1 amigável | 2 agressivo | 3 apavorante */
+const PAUSA_ANTES = [700, 900, 600, 2200];   // quanto "pensa" antes de falar
+const VEL_DIGITA  = [16, 14, 12, 34];        // ms por letra
+
+async function botFala(texto, nivel) {
+  const el = adiciona("", "bot");
+  el.innerHTML = '<span class="digitando"><i></i><i></i><i></i></span>';
+
+  if (nivel === 3) Som.sussurro();
+  await esperar(PAUSA_ANTES[nivel]);
+
+  if (nivel <= 1) Som.ding();
+  if (nivel === 2) { Som.golpe(); tremor(); }
+  if (nivel === 3) { Som.batida(); piscar(); }
+
+  el.textContent = "";
+  for (let i = 0; i < texto.length; i++) {
+    el.textContent += texto[i];
+    if (i % 2 === 0 && texto[i] !== " ") Som.tecla(nivel);
+    if (nivel === 3 && texto[i] === "\n") await esperar(650);   // pausas dramáticas
+    else if (nivel === 3 && ".…".includes(texto[i])) await esperar(180);
+    await esperar(VEL_DIGITA[nivel]);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
+
+function aplicaNivel(n) {
+  document.body.dataset.nivel = n;
+  $("#avatar").textContent = AVATARES[n];
+  $("#status").textContent = STATUS[n];
+  if (n === 2) Som.iniciaDrone(0.05);
+  if (n === 3) { Som.iniciaDrone(0.12); Som.iniciaCoracao(62); iniciaFalhasAleatorias(); }
+}
+
+async function post(url, corpo) {
+  const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+  return r.json();
+}
+
+function carregaImagem(url) {
+  return new Promise((res) => {
+    if (!url) return res(null);
+    const img = new Image();
+    img.referrerPolicy = "no-referrer";
+    img.onload = () => res(img);
+    img.onerror = () => res(null);
+    img.src = url;
+  });
+}
+
+/* =====================================================================
+   REVELAÇÃO FINAL (longa, com tensão crescente)
+   ===================================================================== */
+async function digitaTerminal(el, linha, ms = 22) {
+  for (const ch of linha) {
+    el.textContent += ch;
+    if (ch !== " ") Som.tecla(3);
+    await esperar(ms);
+  }
+  el.textContent += "\n";
+}
+
+async function revelaFoto(dossie) {
+  pararFalhas();
+  const susto = $("#susto"), term = $("#terminal"), barra = $("#barra-prog"), pct = $("#pct");
+  const primeiro = (estado.nome || "").split(" ")[0] || "você";
+  const imgPromessa = carregaImagem(estado.foto);
+
+  term.textContent = ""; barra.style.width = "0%"; pct.textContent = "";
+  $("#fase1").classList.remove("oculto"); $("#fase2").classList.add("oculto");
+
+  /* 1) escurece a tela */
+  susto.classList.add("visivel");
+  await esperar(50);
+  susto.classList.add("ativo");
+  Som.iniciaDrone(0.16);
+  Som.iniciaCoracao(66);
+  await esperar(2600);
+
+  /* 2) "varredura" linha por linha */
+  const linhas = ["> iniciando varredura…", ...(dossie || []).map((l) => "> " + l), "> imagem localizada."];
+  for (let i = 0; i < linhas.length; i++) {
+    await digitaTerminal(term, linhas[i]);
+    if (i % 2 === 1) piscar();
+    await esperar(1100);
+  }
+  Som.sussurro();
+  await esperar(1500);
+
+  /* 3) barra de progresso: o coração acelera */
+  const TOTAL = 9000, PASSO = 150;
+  for (let t = 0; t <= TOTAL; t += PASSO) {
+    const p = Math.min(100, Math.round((t / TOTAL) * 100));
+    barra.style.width = p + "%";
+    pct.textContent = "carregando imagem… " + p + "%";
+    Som.bpm = 66 + p * 0.7;                      // 66 -> 136 bpm
+    Som.ajustaDrone(0.16 + p * 0.002);
+    if (p > 55 && Math.random() < 0.08) falha();
+    await esperar(PASSO);
+  }
+  pct.textContent = "carregando imagem… 100%";
+
+  /* 4) silêncio total e escuridão */
+  Som.paraCoracao(); Som.paraDrone();
+  await esperar(500);
+  $("#fase1").classList.add("oculto");
+  await esperar(2600);
+
+  /* 5) o susto */
+  const moldura = $("#moldura");
+  moldura.innerHTML = "";
+  const img = await imgPromessa;
+  if (img) {
+    img.alt = "";
+    moldura.appendChild(img);
+  } else {
+    moldura.innerHTML = '<div class="sem-foto">👁️</div>';
+  }
+  $("#susto-titulo").textContent = "";
+  $("#fase2").classList.remove("oculto");
+
+  const f = $("#flash"); f.classList.remove("dispara"); void f.offsetWidth; f.classList.add("dispara");
+  Som.stinger();
+  tremor();
+
+  await esperar(1800);
+  const titulo = `Eu estou vendo você, ${primeiro}.`;
+  const h = $("#susto-titulo");
+  for (const ch of titulo) { h.textContent += ch; Som.tecla(3); await esperar(70); }
+  Som.iniciaCoracao(80);
+  Som.iniciaDrone(0.1);
+
+  await esperar(6000);
+  Som.paraCoracao(); Som.paraDrone();
+  $("#susto-texto").classList.add("mostra");
+  Som.ding();
+  await esperar(3500);
+  $("#susto-fechar").classList.add("mostra");
+}
+
+$("#susto-fechar").onclick = () => {
+  const susto = $("#susto");
+  Som.paraCoracao(); Som.paraDrone();
+  susto.classList.remove("ativo");
+  setTimeout(() => susto.classList.remove("visivel"), 1600);
+};
+
+/* =====================================================================
+   FLUXO
+   ===================================================================== */
+function mostraCampoNome() {
+  rodape.innerHTML = '<form id="form"><input id="campo" autocomplete="off" autofocus placeholder="Digite seu nome completo…"><button class="primario" type="submit">Enviar</button></form>';
+  $("#form").addEventListener("submit", enviaNome);
+  $("#campo").focus();
+}
+
+function mostraOpcoes(opcoes) {
+  rodape.innerHTML = "";
+  const caixa = document.createElement("div");
+  caixa.className = "opcoes";
+  opcoes.forEach((o) => {
+    const b = document.createElement("button");
+    b.textContent = o.label;
+    b.onclick = () => escolhe(o);
+    caixa.appendChild(b);
+  });
+  rodape.appendChild(caixa);
+}
+
+async function enviaNome(ev) {
+  ev.preventDefault();
+  Som.init();                                   // navegador exige um clique para liberar o áudio
+  const campo = $("#campo"), texto = campo.value.trim();
+  if (!texto) return;
+  rodape.querySelectorAll("button,input").forEach((e) => (e.disabled = true));
+  adiciona(texto, "user");
+  Som.clique();
+  const r = await post("/api/nome", { nome: texto });
+  await botFala(r.mensagem, 0);
+  if (r.status === "ok") {
+    estado.perfil_id = r.perfil_id;
+    estado.rodada = r.rodada;
+    estado.nome = r.nome || "";
+    estado.foto = r.foto || null;
+    carregaImagem(estado.foto);                 // pré-carrega a foto em segundo plano
+    mostraOpcoes(r.opcoes);
+  } else {
+    mostraCampoNome();
+  }
+}
+
+async function escolhe(opcao) {
+  Som.init(); Som.clique();
+  rodape.querySelectorAll("button").forEach((b) => (b.disabled = true));
+  adiciona(opcao.label, "user");
+  const r = await post("/api/escolha", { perfil_id: estado.perfil_id, rodada: estado.rodada, opcao: opcao.id, usadas: estado.usadas });
+  if (r.erro) { mostraOpcoes((r.opcoes || []).filter((o) => !estado.usadas.includes(o.id))); return; }
+  estado.usadas.push(opcao.id);                 // essa pergunta não aparece mais
+  aplicaNivel(r.nivel);                         // 1 amigável | 2 agressivo | 3 apavorante
+  await botFala(r.mensagem, r.nivel);
+  estado.rodada = r.rodada;
+  if (r.fim) {
+    if (r.foto) estado.foto = r.foto;
+    if (r.nome) estado.nome = r.nome;
+    rodape.innerHTML = '<div class="fim">— conexão encerrada —</div>';
+    await esperar(3500);
+    revelaFoto(r.dossie);
+  } else {
+    mostraOpcoes(r.opcoes);
+  }
+}
+
+$("#form").addEventListener("submit", enviaNome);
+botFala("Olá! Eu sou o assistente virtual. Para começarmos, qual é o seu nome?", 0);
+</script>
+</body>
+</html>

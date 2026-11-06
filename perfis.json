@@ -1,0 +1,511 @@
+[
+  {
+    "arquivo": "Gustavo Linkendin.pdf",
+    "contato": {
+      "email": null,
+      "telefone": null,
+      "linkedin": "https://www.linkedin.com/in/gustavodecastropuntani/",
+      "github": "github.com/GustavoCastroDev"
+    },
+    "competencias": [
+      "Capacidade de organização",
+      "Agilidade",
+      "Ensino secundário"
+    ],
+    "certificacoes": [],
+    "idiomas": [],
+    "nome": "Gustavo de Castro",
+    "id": "gustavo-de-castro",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQH0DUznVT5Fsw/profile-displayphoto-crop_800_800/B4DaCd.kO0I8AI-/0/1789356820468?e=1794441600&v=beta&t=UjHp-KCYi6JRrxW0vg4cr_p94wB43hg61pUGCSNuxI0",
+    "foto_local": "/static/fotos/gustavo-de-castro.png",
+    "foto_origem": "https://www.linkedin.com/in/gustavodecastropuntani/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Desenvolvedor Full Stack | Java | PHP | MySQL | HTML | CSS | JS | Bootstrap | React",
+    "resumo": "Sou um programador iniciante, dedicado e apaixonado por aprendizado contínuo. Valorizo o trabalho em equipe, especialmente no desenvolvimento de soluções tecnológicas, onde a colaboração é essencial. Tenho conhecimento em PHP, MySQL, Bootstrap e dentre outras tecnologias e, no momento, estou em busca uma oportunidade em uma equipe de desenvolvimento para contribuir com minhas habilidades, evoluir profissionalmente e crescer na área de tecnologia. Destaco alguns conhecimentos como: HTML, CSS, JS, Bootstrap, PHP, SQL, UI/UX, Excel, Word, PowerPoint. Cursando: - Aprendizagem Industrial em Assistente Administrativo (SENAI) - Tecnólogo em Análise e Desenvolvimento de Sistemas (Ung Guarulhos) Perfil Profissional: - Atuação na Área Comercial: com experiência em atendimento ao cliente, atendimento telefônico, realização de pedidos e de orçamentos variados. - Atuação na Área Logística: com vivência no auxílio em documentação, realização de pedidos, controle de expedição de produtos e controle de estoque. - Comprometido, trabalho em equipe, interessado, proatividade, organizado e aprendizagem rápida.",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Aprendiz de Suprimentos",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "Sabesp",
+        "cargo": "Assistente administrativo",
+        "periodo": "junho de 2025 - outubro de 2026 (1 ano 5 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": "Atividades administrativas e suporte em rotinas de escritório. Participação no Curso de Aprendizagem Industrial em Assistente Administrativo pelo SENAI, desenvolvendo habilidades organizacionais, comunicação e trabalho em equipe."
+      },
+      {
+        "empresa": "Pet Shop Rações Renata",
+        "cargo": "Atendente",
+        "periodo": "fevereiro de 2025 - maio de 2025 (4 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "Pet Shop Rações Renata",
+        "cargo": "Atendente",
+        "periodo": "outubro de 2024 - janeiro de 2025 (4 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Centro Universitário Eniac",
+        "curso": "Bacharelado em Engenharia, Engenharia de Software 2026 - agosto de 2029)",
+        "periodo": "fevereiro de"
+      },
+      {
+        "instituicao": "Senai São Paulo",
+        "curso": "Administrative Assistant and Secretarial Science, General 2026 - outubro de 2027)",
+        "periodo": "junho de"
+      },
+      {
+        "instituicao": "Etec de Guarulhos",
+        "curso": "Sistemas, Tecnologia da Informação",
+        "periodo": "fevereiro de 2022 - dezembro de 2024"
+      },
+      {
+        "instituicao": "CEMEAR - Centro Municipal de Educação e Artes",
+        "curso": "Curso de Idiomas, Inglês - Básico ao Intermediário 2022 - dezembro de 2023)",
+        "periodo": "setembro de"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Julia Silva Santos Linkendin.pdf",
+    "contato": {
+      "email": "julliassantos00@gmail.com",
+      "telefone": "3130 11943084843",
+      "linkedin": "https://www.linkedin.com/in/julia-silva-santos-43b95a316/",
+      "github": null
+    },
+    "competencias": [
+      "Postura",
+      "Comunicação",
+      "Direito econômico"
+    ],
+    "certificacoes": [
+      "Simulação da Organização das Nações Unidas (ONU) | MUN"
+    ],
+    "idiomas": [],
+    "nome": "Julia Silva Santos",
+    "id": "julia-silva-santos",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQEP-TaG6pkltA/profile-displayphoto-crop_800_800/B4DaFrB0HHGcAI-/0/1792797000766?e=1794441600&v=beta&t=8dLOY7IIRAXlx0ifywgK6RQoeXB-GGaR4w3zc98LqqM",
+    "foto_local": "/static/fotos/julia-silva-santos.png",
+    "foto_origem": "https://www.linkedin.com/in/julia-silva-santos-43b95a316/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Produção na empresa Aché Laboratórios Farmacêuticos | Graduanda em Biomedicina",
+    "resumo": "Graduanda em Biomedicina pela Universidade Paulista (UNIP), com formação como Auxiliar de Enfermagem pelo Colégio ENIAC e, atualmente, em formação na Aprendizagem Industrial – Assistente Administrativo pelo SENAI.Estou iniciando minha trajetória profissional no Aché Laboratórios Farmacêuticos, buscando desenvolver conhecimentos sobre o ambiente corporativo e os processos da indústria farmacêutica, além de aprimorar minhas habilidades técnicas e comportamentais.Ao longo da minha formação, participei de projetos acadêmicos e interdisciplinares, incluindo simulações da Organização das Nações Unidas (ONU), que contribuíram para o desenvolvimento da minha comunicação, pensamento crítico, responsabilidade e trabalho em equipe.Tenho interesse em ciência, saúde e indústria farmacêutica, e busco continuamente oportunidades de aprendizado que me permitam conectar conhecimento acadêmico, experiência prática e desenvolvimento profissional.Acredito no aprendizado contínuo, na ética e no comprometimento como pilares para construir uma trajetória profissional consistente.",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Aprendiz",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Universidade Paulista",
+        "curso": "Graduação em andamento, Biomedicina 2029)",
+        "periodo": "fevereiro de 2026 - dezembro de"
+      },
+      {
+        "instituicao": "Centro Universitário Eniac",
+        "curso": "Ensino Médio Técnico Integrado, Enfermagem de 2025)",
+        "periodo": "janeiro de 2023 - dezembro"
+      },
+      {
+        "instituicao": "Senai São Paulo",
+        "curso": "Aprendizagem Industrial, Assistente Administrativo 2026 - novembro de 2027)",
+        "periodo": "outubro de"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Kamila Linkendin.pdf",
+    "contato": {
+      "email": "boaskamilla@gmail.com",
+      "telefone": "775288385",
+      "linkedin": "https://www.linkedin.com/in/kamilla-vilas-775288385/",
+      "github": null
+    },
+    "competencias": [
+      "Análise de dados",
+      "Desenvolvimento de front-end",
+      "MySQL"
+    ],
+    "certificacoes": [],
+    "idiomas": [
+      "Inglês (Limited Working)"
+    ],
+    "nome": "Kamilla Vilas",
+    "id": "kamilla-vilas",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQE7LuBg_KxvRQ/profile-displayphoto-crop_800_800/B4DaFWDuKHK4AI-/0/1792445179994?e=1794441600&v=beta&t=tqCLC684l3J-Uc_vN9HQyJwFOxm099pJEYCBm96cPqU",
+    "foto_local": "/static/fotos/kamilla-vilas.png",
+    "foto_origem": "https://www.linkedin.com/in/kamilla-vilas-775288385/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Aprendiz de Produção no Aché Laboratorios Farmacêuticos | Estudante de Farmácia | Téc. em Desenvolvimento de Sistemas pela Etec",
+    "resumo": "",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Aprendiz de Produção",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "Bauducco",
+        "cargo": "Assistente de RH",
+        "periodo": "dezembro de 2025 - outubro de 2026 (11 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Universidade Cruzeiro do Sul",
+        "curso": "Bacharelado em Farmácia/Farmácia-Bioquímica, Pharmacy 2026 - dezembro de 2029)",
+        "periodo": "março de"
+      },
+      {
+        "instituicao": "Etec de Guarulhos",
+        "curso": "Ensino Técnico, Desenvolvimento de Sistemas",
+        "periodo": "2024 - 2025"
+      },
+      {
+        "instituicao": "Senai São Paulo",
+        "curso": "Assistente Administrativo, Administração",
+        "periodo": "outubro de 2026"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Manuel Linkendin.pdf",
+    "contato": {
+      "email": "manuelcampelo22@gmail.com",
+      "telefone": "11952865632",
+      "linkedin": "https://www.linkedin.com/in/manuel-almeida-campelo-452ba1335/",
+      "github": "github.com/Manuelcamp"
+    },
+    "competencias": [
+      "Comunicação",
+      "Habilidades analíticas",
+      "Resolução de problemas"
+    ],
+    "certificacoes": [
+      "Java COMPLETO Programação Orientada a Objetos + Projetos"
+    ],
+    "idiomas": [],
+    "nome": "Manuel Almeida Campelo",
+    "id": "manuel-almeida-campelo",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4E03AQFuIk9w2yizuw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1730223888400?e=1794441600&v=beta&t=0Jum8XnNn21UWtvJKZ9YP3iKkXRxIiTO5ga2FSzontg",
+    "foto_local": "/static/fotos/manuel-almeida-campelo.jpg",
+    "foto_origem": "https://www.linkedin.com/in/manuel-almeida-campelo-452ba1335/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Desenvolvedor Back-End | Java | Python | SpringBoot | Suporte",
+    "resumo": "Olá, me chamo Manuel! Atualmente sou estudante de Ciências da Computação na Cruzeiro do Sul Virtual (EAD). Meu objetivo é ingressar na área de TI, ganhar experiência prática e construir uma carreira sólida em tecnologia, sempre com foco em aprendizado contínuo e colaboração em equipe.",
+    "experiencias": [
+      {
+        "empresa": "Colégio Torricelli",
+        "cargo": "Assistente de TI",
+        "periodo": "dezembro de 2025 - janeiro de 2026 (2 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": "Desenvolvi script para atualizar 100+ computadores mensalmente, eliminando horas de rotinas manuais do setor de T.I Criei dashboards com PowerBI estruturando dados brutos de alunos (atrasos/ocorrências) para apoiar decisões estratégicas da gestão Configurei o banco de dados das catracas, integrando o acesso de todos os alunos via biometria facial Suporte e Infraestrutura: Diagnóstico de falhas, manutenção de computadores e suporte técnico ao usuário final."
+      },
+      {
+        "empresa": "Colégio Torricelli",
+        "cargo": "Estagiário de TI",
+        "periodo": "setembro de 2025 - novembro de 2025 (3 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": "Estagiário de Suporte T.I"
+      },
+      {
+        "empresa": "Luxafit Transportes",
+        "cargo": "Auxiliar de Escritório",
+        "periodo": "março de 2024 - julho de 2025 (1 ano 5 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": "Organização e controle de documentos como CTEs, OSTs e RAPR, com registro e acompanhamento por meio de planilhas no Excel. Desenvolvi scripts de automação em Python que reduziram o tempo de processamento de planilhas de 3 horas para 20 minutos"
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Cruzeiro do Sul Virtual",
+        "curso": "Bacharelado, Ciência da Computação",
+        "periodo": "fevereiro de 2025 - julho de 2028"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Matheus Linkendin.pdf",
+    "contato": {
+      "email": "matheusbrito0303@gmail.com",
+      "telefone": "11)97403-8494",
+      "linkedin": "https://www.linkedin.com/in/matheus-brito-124467213/",
+      "github": null
+    },
+    "competencias": [
+      "Rádio",
+      "Operações aeroportuárias",
+      "Segurança da aviação"
+    ],
+    "certificacoes": [],
+    "idiomas": [],
+    "nome": "Matheus Brito",
+    "id": "matheus-brito",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQE_0cEzYoo4bQ/profile-displayphoto-crop_800_800/B4DZ3aVdsiHkAI-/0/1777484554885?e=1794441600&v=beta&t=vhszV0576X84fUVKsODmpv81a7lwC5S7bEmSH4a1u7Q",
+    "foto_local": "/static/fotos/matheus-brito.png",
+    "foto_origem": "https://www.linkedin.com/in/matheus-brito-124467213/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "| Técnico em logística | Jovem aprendiz | Assistente administrativo (CCO)",
+    "resumo": "Técnico em Logística, com base teórica fundamentada nos estudos da Cadeia de Suprimentos e apoio à resolução de processos associados. Perfil organizado, proativo e metódico. Possuo facilidade com as normas acadêmicas (ABNT), capacidade de resolver problemas em equipe e comunicação clara.",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Assistente administrativo",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "PROAIR Serviços Auxiliares de Transporte Aéreo LTDA",
+        "cargo": "Assistente administrativo (CCO)",
+        "periodo": "fevereiro de 2026 - setembro de 2026 (8 meses)",
+        "local": null,
+        "descricao": "Aeroporto Internacional de Guarulhos - Jovem aprendiz"
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Etec de Guarulhos",
+        "curso": "Logística, Gestão da Cadeia de Suprimentos e Logística 2023 - dezembro de 2025)",
+        "periodo": "fevereiro de"
+      },
+      {
+        "instituicao": "Escola Elmo",
+        "curso": "Idiomas (Inglês)",
+        "periodo": "junho de 2024 - dezembro de 2026"
+      },
+      {
+        "instituicao": "Senai São Paulo",
+        "curso": "Ensino Técnico, Administration",
+        "periodo": "setembro de 2026 - dezembro de 2027"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Nicoly Linkendin.pdf",
+    "contato": {
+      "email": "nicoly.cavalcanth@gmail.com",
+      "telefone": "11991873454",
+      "linkedin": "https://www.linkedin.com/in/nicoly-cavalcanti-705863346/",
+      "github": null
+    },
+    "competencias": [
+      "Educação profissionalizante",
+      "Mão de obra qualificada",
+      "Experiência profissional"
+    ],
+    "certificacoes": [],
+    "idiomas": [],
+    "nome": "Nicoly Cavalcanti",
+    "id": "nicoly-cavalcanti",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQFnnHk3DcJ2-A/profile-displayphoto-shrink_800_800/B4DZRikXYAHUAc-/0/1736820488740?e=1794441600&v=beta&t=gPyxs4kK6sCSWUUsc54utFJHzjnztDFgcbBGlbSSYLI",
+    "foto_local": "/static/fotos/nicoly-cavalcanti.jpg",
+    "foto_origem": "https://www.linkedin.com/in/nicoly-cavalcanti-705863346/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Estudante de Administração, atualmente Jovem Aprendiz na Aché, atuando na área administrativa. Busco desenvolver meus conhecimentos, adquirir novas experiências e crescer profissionalmente na área.",
+    "resumo": "",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Aprendiz",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "Mercadocar",
+        "cargo": "Aprendiz",
+        "periodo": "abril de 2025 - outubro de 2026 (1 ano 7 meses)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      },
+      {
+        "empresa": "Pelog Soluções Logísticas",
+        "cargo": "Funcionário de transporte",
+        "periodo": "fevereiro de 2025 - março de 2025 (2 meses)",
+        "local": null,
+        "descricao": "Cumbica"
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Cruzeiro do Sul Virtual",
+        "curso": "Bacharelado em Administração, Administração de 2029)",
+        "periodo": "janeiro de 2026 - dezembro"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Roberta Linkendin.pdf",
+    "contato": {
+      "email": null,
+      "telefone": null,
+      "linkedin": "https://www.linkedin.com/in/roberta-gdias/",
+      "github": null
+    },
+    "competencias": [
+      "Microsoft Word",
+      "Trabalho voluntário no setor não",
+      "lucrativo",
+      "voluntariado com crianças"
+    ],
+    "certificacoes": [],
+    "idiomas": [],
+    "nome": "Roberta Gonçalves Dias",
+    "id": "roberta-goncalves-dias",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQGay_093soC7g/profile-displayphoto-crop_800_800/B4DaFpCtZzJIAI-/0/1792763680616?e=1794441600&v=beta&t=tBUQjc1nHhtQ_UHC_41ROEIWBL3ra5aVhk_RaUZfXx0",
+    "foto_local": "/static/fotos/roberta-goncalves-dias.jpg",
+    "foto_origem": "https://www.linkedin.com/in/roberta-gdias/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Aprendiz da empresa Aché Laboratórios Farmacêuticos | Bacharelado em Psicologia - 4°Semestre",
+    "resumo": "Sou estudante de Psicologia e estou construindo minha trajetória profissional com curiosidade, dedicação e vontade de aprender.Ao longo da minha experiência profissional, tive a oportunidade de atuar no setor administrativo e comercial de uma grande cooperativa do ramo de alimentos, vivenciando a rotina de uma empresa, o trabalho em equipe, a organização de demandas e a comunicação com diferentes pessoas e áreas. Essa experiência contribuiu muito para o meu amadurecimento profissional e pessoal.A graduação em Psicologia tem ampliado minha forma de enxergar as pessoas, as relações e os diferentes contextos em que estamos inseridos. Busco aproveitar cada oportunidade de aprendizado para desenvolver novas habilidades e conhecer diferentes possibilidades de atuação dentro da área.Sou uma pessoa comprometida, cooperativa, flexível e atenta às pessoas ao meu redor. Gosto de aprender, colaborar com a equipe e encarar novos desafios como oportunidades de crescimento.Estou em constante construção e aberta a novas experiências que contribuam para o meu desenvolvimento e para a construção da minha carreira. ✨",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Aprendiz",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": null,
+        "descricao": ""
+      },
+      {
+        "empresa": "Aurora Coop",
+        "cargo": "Jovem aprendiz",
+        "periodo": "agosto de 2025 - setembro de 2026 (1 ano 2 meses)",
+        "local": "São Paulo, Brasil",
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Centro Universitário Eniac",
+        "curso": "Bacharelado, PSYCHOLOGY",
+        "periodo": "abril de 2025 - dezembro de 2029"
+      },
+      {
+        "instituicao": "Fisk",
+        "curso": "Informática",
+        "periodo": null
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Sara Linkendin.pdf",
+    "contato": {
+      "email": "rsahra.958@gmail.com",
+      "telefone": null,
+      "linkedin": "https://www.linkedin.com/in/sara-rodrigues-3134ab19a/",
+      "github": null
+    },
+    "competencias": [],
+    "certificacoes": [
+      "VI Fórum de Farmácia Digital e Tecnologias da Área Farmacêutica Boas Práticas de Laboratório (BPL) Encontro Paulista de Farmacêuticos \"Cuidado Farmacêutico Personalizado, Saúde Integrativa e Sustentabilidade\" Microsoft Power Bi Ferramentas da Qualidade"
+    ],
+    "idiomas": [],
+    "nome": "Sara Rodrigues",
+    "id": "sara-rodrigues",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQF4EPW0Ukr8Kw/profile-displayphoto-crop_800_800/B4DZz5DLgJG4AI-/0/1773704887577?e=1794441600&v=beta&t=Bj7PVTZ9u0hPGSWugG2NaKK1JvBT7ew_QTBnOjPYRC0",
+    "foto_local": "/static/fotos/sara-rodrigues.png",
+    "foto_origem": "https://www.linkedin.com/in/sara-rodrigues-3134ab19a/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Estágiaria em Farmácia de Manipulação | Cursando Farmácia",
+    "resumo": "",
+    "experiencias": [
+      {
+        "empresa": "Pharma Nutri Eireli",
+        "cargo": "Estágiaria em Farmácia de Manipulação",
+        "periodo": "junho de 2026 - Present (5 meses)",
+        "local": null,
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Universidade Cruzeiro do Sul",
+        "curso": "Bacharelado em Farmácia",
+        "periodo": "fevereiro de 2024 - dezembro de 2027"
+      },
+      {
+        "instituicao": "Instituto Federal de Educação, Ciência e Tecnologia de São Paulo -",
+        "curso": null,
+        "periodo": null
+      },
+      {
+        "instituicao": "IFSP",
+        "curso": "Ensino Médio Integrado ao Técnico em Eletrônica 2020 - dezembro de 2023)",
+        "periodo": "fevereiro de"
+      }
+    ],
+    "outras_secoes": {}
+  },
+  {
+    "arquivo": "Thamiris Linkendin.pdf",
+    "contato": {
+      "email": "thamirisnadyla123@gmail.com",
+      "telefone": null,
+      "linkedin": "https://www.linkedin.com/in/thamiris-nadyla-da-silva-pires-0b5a22309/",
+      "github": null
+    },
+    "competencias": [
+      "Aprendizado rápido",
+      "proatividade",
+      "Comunicação"
+    ],
+    "certificacoes": [],
+    "idiomas": [],
+    "nome": "Thamiris Nadyla da Silva Pires",
+    "id": "thamiris-nadyla-da-silva-pires",
+    "foto_url": "https://media.licdn.com/dms/image/v2/D4D03AQFkEb3fGnwXzg/profile-displayphoto-crop_800_800/B4DaFpDpHEJIAI-/0/1792763925931?e=1794441600&v=beta&t=JWa1DY1XIVGXKXRyEfzIzXitldvTtEGBeX30sYk-7Co",
+    "foto_local": "/static/fotos/thamiris-nadyla-da-silva-pires.png",
+    "foto_origem": "https://www.linkedin.com/in/thamiris-nadyla-da-silva-pires-0b5a22309/",
+    "localizacao": "Guarulhos, São Paulo, Brasil",
+    "headline": "Estudante de biomedicina | Aprendiz em Controle da Qualidade no Achē Laboratório | Técnico em Administração Senai (cursando)",
+    "resumo": "Estudante de Biomedicina pela Universidade Santo Amaro (Unisa) e do curso técnico em Administração pelo SENAI. Atuo como jovem aprendiz no Aché Laboratórios Farmacêuticos, com foco na área de Controle de Qualidade.",
+    "experiencias": [
+      {
+        "empresa": "Aché Laboratórios Farmacêuticos",
+        "cargo": "Garantia de qualidade",
+        "periodo": "outubro de 2026 - Present (1 mês)",
+        "local": "Guarulhos, São Paulo, Brasil",
+        "descricao": ""
+      }
+    ],
+    "formacao": [
+      {
+        "instituicao": "Universidade Santo Amaro - Unisa",
+        "curso": "bacharelado em biomedicina, Biomedicina 2028)",
+        "periodo": "janeiro de 2025 - dezembro de"
+      },
+      {
+        "instituicao": "Senai São Paulo",
+        "curso": "Ensino Técnico, administração industrial 2027)",
+        "periodo": "outubro de 2026 - dezembro de"
+      }
+    ],
+    "outras_secoes": {}
+  }
+]

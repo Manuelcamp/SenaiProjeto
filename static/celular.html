@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Assistente</title>
+<style>
+  :root {
+    --bg: #eef4ff; --painel: #ffffff; --texto: #1c2a44; --acento: #3b82f6;
+    --bolha-bot: #e8f0ff; --bolha-user: #3b82f6; --bolha-user-texto: #fff;
+    --borda: #d6e2fb; --fonte: "Segoe UI", system-ui, sans-serif;
+  }
+  body[data-nivel="1"] { --bg:#f3eee8; --painel:#fffdf9; --texto:#3a2d22; --acento:#c98a3b; --bolha-bot:#f5ebdc; --bolha-user:#c98a3b; --borda:#e6d5bd; }
+  body[data-nivel="2"] { --bg:#16110e; --painel:#221a15; --texto:#f0e2d6; --acento:#ff7a1a; --bolha-bot:#33261d; --bolha-user:#8a3d0c; --bolha-user-texto:#fff; --borda:#5a3a24; --fonte:Arial, Helvetica, sans-serif; }
+  body[data-nivel="3"] { --bg:#050505; --painel:#0d0d0d; --texto:#ff4a4a; --acento:#ff1f1f; --bolha-bot:#1a0707; --bolha-user:#3a0a0a; --bolha-user-texto:#ff9a9a; --borda:#5a0f0f; --fonte:"Courier New",monospace; }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--texto); font-family: var(--fonte); transition: background 1s, color 1s; }
+  .app { height: 100%; display: flex; flex-direction: column; background: var(--painel); transition: background 1s; }
+  header { padding: 14px 16px; padding-top: max(14px, env(safe-area-inset-top)); border-bottom: 1px solid var(--borda); display: flex; align-items: center; gap: 12px; }
+  .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--acento); display: grid; place-items: center; font-size: 20px; transition: background 1s; }
+  header strong { font-size: 17px; }
+  header small { display: block; opacity: .65; font-size: 12px; }
+
+  #mensagens { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .msg { max-width: 88%; padding: 11px 14px; border-radius: 16px; font-size: 17px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }
+  .msg.nova { animation: entra .35s ease; }
+  .bot { align-self: flex-start; background: var(--bolha-bot); border-bottom-left-radius: 4px; }
+  .user { align-self: flex-end; background: var(--bolha-user); color: var(--bolha-user-texto); border-bottom-right-radius: 4px; }
+  body[data-nivel="2"] .bot { border-left: 4px solid var(--acento); font-weight: 600; }
+  body[data-nivel="3"] .bot { text-shadow: 0 0 8px rgba(255,0,0,.6); }
+  .digitando { display: inline-flex; gap: 5px; padding: 4px 0; }
+  .digitando i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .4; animation: pulso 1s infinite; }
+  .digitando i:nth-child(2) { animation-delay: .2s; } .digitando i:nth-child(3) { animation-delay: .4s; }
+
+  footer { padding: 14px 16px; padding-bottom: max(14px, env(safe-area-inset-bottom)); border-top: 1px solid var(--borda); display: flex; flex-direction: column; gap: 10px; }
+  form { display: flex; flex-direction: column; gap: 10px; }
+  input { font: inherit; font-size: 18px; padding: 13px 14px; border-radius: 12px; border: 1px solid var(--borda); background: var(--bg); color: var(--texto); outline: none; width: 100%; }
+  input:focus { border-color: var(--acento); }
+  button { font: inherit; font-size: 17px; cursor: pointer; border: 1px solid var(--acento); background: transparent; color: var(--texto); padding: 14px 16px; border-radius: 12px; text-align: left; }
+  button:active:not(:disabled) { background: var(--acento); color: #fff; }
+  button:disabled { opacity: .45; }
+  .primario { background: var(--acento); color: #fff; text-align: center; }
+  .opcoes { display: flex; flex-direction: column; gap: 8px; }
+  .aviso { text-align: center; opacity: .8; font-size: 15px; line-height: 1.4; }
+  .erro { color: #d33; font-size: 14px; }
+  body[data-nivel="2"] .erro, body[data-nivel="3"] .erro { color: #ff8a5a; }
+
+  @keyframes entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes pulso { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+  @keyframes tremer { 0%,100% { transform: none; } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+  body[data-nivel="3"] .app { animation: tremer 5s infinite; }
+</style>
+</head>
+<body data-nivel="0">
+<div class="app">
+  <header>
+    <div class="avatar" id="avatar">🤖</div>
+    <div><strong>Assistente</strong><small id="status">online</small></div>
+  </header>
+  <div id="mensagens"></div>
+  <footer id="rodape"></footer>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const msgs = $("#mensagens"), rodape = $("#rodape");
+const AVATARES = ["🤖", "🙂", "😠", "💀"];
+const STATUS = ["online", "online", "irritado", "não saia daí"];
+
+let sid = sessionStorage.getItem("sid");
+let sigAnterior = "", visAnterior = 0, sessaoAnterior = null, erroNome = "", vibrouFim = false, enviando = false;
+
+const get = (u) => fetch(u, { cache: "no-store" }).then((r) => r.json());
+const post = (u, b) =>
+  fetch(u, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) }).then((r) => r.json());
+const vibra = (p) => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+
+async function poll() {
+  try {
+    const r = await get("/api/sala/estado?papel=celular&sid=" + encodeURIComponent(sid || ""));
+    render(r);
+  } catch (e) {
+    $("#status").textContent = "sem conexão…";
+  }
+}
+
+function render(r) {
+  const s = r.sessao, minha = !!r.minha && !!s;
+  if (sid && !minha) { sessionStorage.removeItem("sid"); sid = null; }
+
+  let vis = 0, nivel = 0;
+  if (minha) {
+    vis = r.telao_online ? Math.min(s.exibidas, s.mensagens.length) : s.mensagens.length;
+    for (let i = 0; i < vis; i++) if (s.mensagens[i].quem === "bot") nivel = s.mensagens[i].nivel;
+    if (s.fase === "revelando" || s.fase === "fim") nivel = 3;
+  }
+
+  const sig = JSON.stringify([minha && s.id, vis, minha && s.mensagens.length, minha && s.fase, minha && s.liberado, r.ocupada, erroNome, enviando]);
+  if (sig === sigAnterior) return;
+  sigAnterior = sig;
+
+  document.body.dataset.nivel = nivel;
+  $("#avatar").textContent = AVATARES[nivel];
+  $("#status").textContent = STATUS[nivel];
+
+  /* mensagens */
+  if (!minha || s.id !== sessaoAnterior) { visAnterior = 0; vibrouFim = false; }
+  sessaoAnterior = minha ? s.id : null;
+  msgs.innerHTML = "";
+  if (minha) {
+    for (let i = 0; i < vis; i++) {
+      const m = s.mensagens[i];
+      const el = document.createElement("div");
+      el.className = "msg " + m.quem + (i >= visAnterior ? " nova" : "");
+      el.textContent = m.texto;
+      msgs.appendChild(el);
+      if (i >= visAnterior && m.quem === "bot") {
+        if (m.nivel === 2) vibra(120);
+        if (m.nivel === 3) vibra([120, 60, 120]);
+      }
+    }
+    if (vis < s.mensagens.length) {
+      const el = document.createElement("div");
+      el.className = "msg bot";
+      el.innerHTML = '<span class="digitando"><i></i><i></i><i></i></span>';
+      msgs.appendChild(el);
+    }
+    visAnterior = vis;
+  } else {
+    const el = document.createElement("div");
+    el.className = "msg bot";
+    el.textContent = "Olá! Eu sou o assistente virtual. Para começarmos, qual é o seu nome?";
+    msgs.appendChild(el);
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+
+  /* rodapé */
+  const valorCampo = ($("#campo") || {}).value || "";
+  rodape.innerHTML = "";
+
+  if (!minha) {
+    if (r.ocupada) {
+      rodape.innerHTML = '<div class="aviso">⏳ Outra pessoa está conversando agora.<br>Aguarde a sua vez, esta tela atualiza sozinha.</div>';
+      return;
+    }
+    const f = document.createElement("form");
+    f.innerHTML = '<input id="campo" autocomplete="off" placeholder="Digite seu nome completo…" enterkeyhint="send">' +
+      (erroNome ? '<div class="erro"></div>' : "") +
+      '<button class="primario" type="submit">Enviar</button>';
+    if (erroNome) f.querySelector(".erro").textContent = erroNome;
+    f.onsubmit = enviaNome;
+    rodape.appendChild(f);
+    $("#campo").value = valorCampo;
+    return;
+  }
+
+  if (s.fim && vis >= s.mensagens.length) {
+    if (s.fase === "fim") {
+      rodape.innerHTML = '<div class="aviso">Fim da conversa. Obrigado por participar! 🔒<br>Tudo o que usei veio de informações que você mesmo(a) deixou públicas.</div>';
+    } else {
+      rodape.innerHTML = '<div class="aviso">👁️ Olhe para o telão…</div>';
+      if (!vibrouFim) { vibrouFim = true; vibra([300, 150, 300, 150, 600]); }
+    }
+    return;
+  }
+
+  if (s.liberado) {
+    const caixa = document.createElement("div");
+    caixa.className = "opcoes";
+    s.opcoes.forEach((o) => {
+      const b = document.createElement("button");
+      b.textContent = o.label;
+      b.disabled = enviando;
+      b.onclick = () => escolhe(o.id);
+      caixa.appendChild(b);
+    });
+    rodape.appendChild(caixa);
+  } else {
+    rodape.innerHTML = '<div class="aviso">O assistente está respondendo… 👀<br>Acompanhe também pelo telão.</div>';
+  }
+}
+
+async function enviaNome(ev) {
+  ev.preventDefault();
+  const texto = ($("#campo").value || "").trim();
+  if (!texto) return;
+  erroNome = ""; enviando = true; sigAnterior = "";
+  rodape.querySelectorAll("button,input").forEach((e) => (e.disabled = true));
+  try {
+    const r = await post("/api/sala/nome", { nome: texto });
+    if (r.status === "ok") { sid = r.sid; sessionStorage.setItem("sid", sid); }
+    else erroNome = r.mensagem || "Não deu certo. Tente de novo.";
+  } catch (e) { erroNome = "Sem conexão. Tente de novo."; }
+  enviando = false; sigAnterior = "";
+  poll();
+}
+
+async function escolhe(id) {
+  enviando = true; sigAnterior = "";
+  rodape.querySelectorAll("button").forEach((b) => (b.disabled = true));
+  try { await post("/api/sala/escolha", { sid, opcao: id }); } catch (e) {}
+  enviando = false; sigAnterior = "";
+  poll();
+}
+
+// Mais devagar enquanto só espera a vez (economiza chamadas ao servidor).
+async function ciclo() {
+  await poll();
+  setTimeout(ciclo, sid ? 900 : 2500);
+}
+ciclo();
+</script>
+</body>
+</html>

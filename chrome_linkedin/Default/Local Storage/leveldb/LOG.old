@@ -1,0 +1,6 @@
+2026/10/26-21:02:53.431 31ec Reusing MANIFEST D:\PROJETO SENAI\chrome_linkedin\Default\Local Storage\leveldb/MANIFEST-000001
+2026/10/26-21:02:53.444 31ec Recovering log #3
+2026/10/26-21:02:53.446 31ec Reusing old log D:\PROJETO SENAI\chrome_linkedin\Default\Local Storage\leveldb/000003.log 
+2026/10/26-21:07:30.559 222c Level-0 table #5: started
+2026/10/26-21:07:31.050 222c Level-0 table #5: 42487 bytes OK
+2026/10/26-21:07:31.177 222c Delete type=0 #3
